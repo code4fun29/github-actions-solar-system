@@ -25,6 +25,12 @@ jobs:
         with:
           node-version: 20
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install Dependencies
         run: npm install
 
@@ -48,11 +54,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install Dependencies
         run: npm install
 
       - name: Run code coverage
-        continue-on-error: true
         run: npm run coverage
 
       - name: Archive Test Result
