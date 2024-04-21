@@ -21,8 +21,8 @@ jobs:
           MONGO_INITDB_DATABASE: superData
     env:
       MONGO_URI: 'mongodb://localhost:27017/superData'
-      MONGO_USERNAME: non-prod-user
-      MONGO_PASSWORD: non-prod-password
+      MONGO_USERNAME: root-admin
+      MONGO_PASSWORD: root-password
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
