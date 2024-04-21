@@ -7,14 +7,22 @@ on:
       - main
       - 'feature/*'
 
-env:
-  MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
-  MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
-  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-
 jobs:
   unit-testing:
     name: Unit Testing
+    services:
+      mongo-db:
+        image: mongo
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root-admin
+          MONGO_INITDB_ROOT_PASSWORD: root-password
+          MONGO_INITDB_DATABASE: superData
+    env:
+      MONGO_URI: 'mongodb://localhost:27017/superData'
+      MONGO_USERNAME: non-prod-user
+      MONGO_PASSWORD: non-prod-password
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
