@@ -147,23 +147,9 @@ jobs:
   # Install K8s by azure/k8s-set-context@v3 action
   dev-deploy:
     needs: docker
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Install kubectl CLI
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'v1.30.0'
-
-      - name: Configure kubectl
-        uses: azure/k8s-set-context@v3
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-      
-      - name: Fetch Kubernetes Cluster Info
-        run: |
-          kubectl version
-          echo -------------------------
-          kubectl get nodes
+    uses: ./.github/workflows/deployment.yml
+    secrets:
+      k8s-kubeconfig: ${{ secrets.KUBECONFIG }}
+      mongodb-password: ${{ secrets.MONGODB_PASSWORD }}
+    with:
+      mongodb-uri: ${{ vars.MONGO_URI }}
